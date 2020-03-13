@@ -1,0 +1,22 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.fontFamily": "Fira Code, Menlo",
+  "editor.fontLigatures": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "coverage": true,
+    ".nyc_output": true,
+    "**/.idea": true
+  },
+  "workbench.colorCustomizations": {
+    "terminal.background": "#1d1e26"
+  },
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2
+}

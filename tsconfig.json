@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": false,
+    "module": "commonjs",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist",
+    "removeComments": true,
+    "rootDir": "src",
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "es6",
+    "typeRoots": ["node_modules/@types", "./**/typings"],
+    "types": ["chai-as-promised", "mocha", "node", "sinon-chai"]
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules", "./test/**"]
+}
