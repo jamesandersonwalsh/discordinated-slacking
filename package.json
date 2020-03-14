@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "repository": "git@github.com:jimboslicethat/discordinated-slacking.git",
   "author": "James Walsh <jamesandersonwalsh@gmail.com>",
-  "license": "LGPL-2.0-only",
+  "license": "LGPL-3.0-only",
   "scripts": {
     "build": "tsc",
     "start:dev": "TS_NODE_TRANSPILE_ONLY=true nodemon --inspect ./src/index.ts",
