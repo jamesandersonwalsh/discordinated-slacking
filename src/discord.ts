@@ -1,5 +1,7 @@
 import { Client, PartialMessage, Message } from 'discord.js'
 
+import postToSlackWebhook from './slack'
+
 const CMD_PREFIX = '!'
 const MSG_PREFIX = `Beep Boop 👋🤖🤙`
 
@@ -21,8 +23,7 @@ export async function getDiscordClient(): Promise<Client> {
   return client
 }
 
-
-function handleMessages(message:Message|PartialMessage) : void {
+function handleMessages(message: Message | PartialMessage): void {
   const msgIsGreeting = message.content?.includes('butler')
   if (msgIsGreeting) {
     message.channel?.send(`${MSG_PREFIX} - Welcome to Virtual Hangs ${message.member?.nickname}`)
@@ -31,12 +32,28 @@ function handleMessages(message:Message|PartialMessage) : void {
   if (!message.content?.startsWith(CMD_PREFIX) || message.author?.bot) return
   const args = message.content.slice(CMD_PREFIX.length).split(' ')
   const command = args.shift()?.toLowerCase()
-  
+
   if (command === Commands.Notify) {
+    const discordUser: string = (message.member?.nickname as string) || (message.member?.user.tag as string)
+
     if (args) {
-      message.channel?.send(`${MSG_PREFIX} - I'll notify your friends in slack that ${message.member?.nickname} says '${args.join(' ')}' :call_me: `)
+      const slackMessage = args.join(' ')
+      message.channel?.send(
+        `${MSG_PREFIX} - I'll notify your friends in slack that ${discordUser} says "${slackMessage}."`
+      )
+
+      postToSlackWebhook({ discordUser, slackMessage }).catch(err => {
+        console.error('Unable to post to slack webhook.', err.message)
+      })
     } else {
-      message.channel?.send(`${MSG_PREFIX} - Hey ${message.member?.nickname}! I'll notify your friends in slack that you've come online :call_me:`)
+      const slackMessage = `${discordUser} has come online. Join them and chat!`
+      message.channel?.send(
+        `${MSG_PREFIX} - Hey ${discordUser}! I'll notify your friends in slack that you've come online.`
+      )
+
+      postToSlackWebhook({ discordUser, slackMessage }).catch(err => {
+        console.error('Unable to post to slack webhook.', err.message)
+      })
     }
   }
 }

@@ -1,8 +1,8 @@
+/* eslint-disable import/first */
 import { config } from 'dotenv'
+config()
 
 import * as discord from './discord'
-
-config()
 
 async function execute(): Promise<void> {
   await discord.getDiscordClient()
