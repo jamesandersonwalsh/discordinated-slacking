@@ -14,8 +14,6 @@ const slackApi = axios.create({
 })
 
 export default async function postToSlackWebhook(params: PublishToSlackParams): Promise<AxiosResponse> {
-  console.log('SLACK_BASE_URL:', SLACK_BASE_URL)
-  console.log('SLACK_WEBHOOK_TOKEN:', SLACK_WEBHOOK_TOKEN)
   const { discordUser, slackMessage } = params
   const slackPost = {
     text: `Virtually hang out with ${discordUser} on Discord.`,
