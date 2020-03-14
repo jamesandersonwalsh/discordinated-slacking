@@ -1,6 +1,7 @@
 import { Client, PartialMessage, Message } from 'discord.js'
 
 import postToSlackWebhook from './slack'
+import users from './users'
 
 const CMD_PREFIX = '!'
 const MSG_PREFIX = `Beep Boop 👋🤖🤙`
@@ -35,18 +36,19 @@ function handleMessages(message: Message | PartialMessage): void {
 
   if (command === Commands.Notify) {
     const discordUser: string = (message.member?.nickname as string) || (message.member?.user.tag as string)
+    const discordToSlackUser: string = users[discordUser]
 
-    if (args) {
-      const slackMessage = args.join(' ')
+    if (!args.length) {
+      const slackMessage = `${discordToSlackUser} says ${args.join(' ')}`
       message.channel?.send(
-        `${MSG_PREFIX} - I'll notify your friends in slack that ${discordUser} says "${slackMessage}."`
+        `${MSG_PREFIX} - I'll notify your friends in slack that ${discordToSlackUser} says "${slackMessage}."`
       )
 
       postToSlackWebhook({ discordUser, slackMessage }).catch(err => {
         console.error('Unable to post to slack webhook.', err.message)
       })
     } else {
-      const slackMessage = `${discordUser} has come online. Join them and chat!`
+      const slackMessage = `${discordToSlackUser} has come online. Join them and chat!`
       message.channel?.send(
         `${MSG_PREFIX} - Hey ${discordUser}! I'll notify your friends in slack that you've come online.`
       )
