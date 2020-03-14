@@ -8,7 +8,7 @@ on:
     branches: [master]
 
 jobs:
-  build_test_and_deploy:
+  build_and_test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -34,3 +34,20 @@ jobs:
         with:
           name: dist
           path: dist
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Login to Heroku Container registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+      - name: Build and push
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:push -a appname ${{ secrets.HEROKU_APP }}
+      - name: Release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release -a appname ${{ secrets.HEROKU_APP }}
