@@ -10,7 +10,8 @@
     "build": "tsc",
     "start:dev": "TS_NODE_TRANSPILE_ONLY=true nodemon --inspect ./src/index.ts",
     "start": "node ./dist/index.js",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "test": "echo 'No Tests yet :('"
   },
   "dependencies": {
     "axios": "0.19.2",
@@ -41,7 +42,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && pretty-quick --staged && npm run build"
+      "pre-commit": "npm run lint && pretty-quick --staged && npm run test && npm run build"
     }
   },
   "nodemonConfig": {
