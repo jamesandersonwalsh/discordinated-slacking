@@ -38,7 +38,7 @@ function handleMessages(message: Message | PartialMessage): void {
     const discordUser: string = (message.member?.nickname as string) || (message.member?.user.tag as string)
     const discordToSlackUser: string = users[discordUser]
 
-    if (!args.length) {
+    if (args.length > 0) {
       const slackMessage = `${discordToSlackUser} says ${args.join(' ')}`
       message.channel?.send(
         `${MSG_PREFIX} - I'll notify your friends in slack that ${discordToSlackUser} says "${slackMessage}."`
