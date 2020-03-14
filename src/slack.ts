@@ -28,7 +28,7 @@ export default async function postToSlackWebhook(params: PublishToSlackParams): 
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: '[Go to Discord](https://discord.gg/H4beabK)'
+          text: 'https://discord.gg/H4beabK'
         }
       }
     ]
