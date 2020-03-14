@@ -2,6 +2,10 @@
 
 An integration between discord and slack using webhooks.
 
+## Core Dependency
+
+This package's core depenency is [Discord.js](https://discordjs.guide/)
+
 ## Getting started
 
 - Install & run yarn
