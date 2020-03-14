@@ -3,7 +3,6 @@ import axios, { AxiosResponse } from 'axios'
 const { SLACK_BASE_URL } = process.env
 
 export interface PublishToSlackParams {
-  discordUser: string
   slackMessage: string
 }
 
@@ -13,9 +12,9 @@ const slackApi = axios.create({
 })
 
 export default async function postToSlackWebhook(params: PublishToSlackParams): Promise<AxiosResponse> {
-  const { discordUser, slackMessage } = params
+  const { slackMessage } = params
   const slackPost = {
-    text: `Virtually hang out with ${discordUser} on Discord.`,
+    text: slackMessage,
     blocks: [
       {
         type: 'section',
@@ -25,10 +24,13 @@ export default async function postToSlackWebhook(params: PublishToSlackParams): 
         }
       },
       {
+        type: 'divider'
+      },
+      {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: 'https://discord.gg/H4beabK'
+          text: '<https://discord.gg/H4beabK|Join them on Discord>'
         }
       }
     ]
