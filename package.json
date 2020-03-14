@@ -8,7 +8,7 @@
   "license": "LGPL-2.0-only",
   "scripts": {
     "build": "tsc",
-    "start:dev": "ts-node ./src/index.ts",
+    "start:dev": "TS_NODE_TRANSPILE_ONLY=true nodemon --inspect ./src/index.ts",
     "start": "node ./dist/index.js",
     "lint": "eslint . --ext .ts"
   },
@@ -30,6 +30,7 @@
     "eslint-plugin-import": "2.20.1",
     "husky": "4.2.3",
     "mocha": "7.1.0",
+    "nodemon": "2.0.2",
     "prettier": "1.19.1",
     "pretty-quick": "2.0.1",
     "sinon": "9.0.1",
@@ -41,6 +42,24 @@
     "hooks": {
       "pre-commit": "npm run lint && pretty-quick --staged && npm run build"
     }
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      ".git",
+      "node_modules/**/node_modules"
+    ],
+    "verbose": true,
+    "execMap": {
+      "ts": "node --require ts-node/register"
+    },
+    "watch": [
+      "src/"
+    ],
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "ext": "json,ts"
   },
   "resolutions": {
     "minimist": "^1.2.2"
