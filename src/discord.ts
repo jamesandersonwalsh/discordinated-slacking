@@ -35,25 +35,26 @@ function handleMessages(message: Message | PartialMessage): void {
   const command = args.shift()?.toLowerCase()
 
   if (command === Commands.Notify) {
-    const discordUser: string = (message.member?.nickname as string) || (message.member?.user.tag as string)
-    const discordToSlackUser: string = users[discordUser]
+    const discordAuthorUsername = message.author?.username as string
+    const discordUserName = (message.member?.nickname as string) || discordAuthorUsername
+    const discordUser: string = users[discordAuthorUsername] ?? discordUserName
 
     if (args.length > 0) {
-      const slackMessage = `${discordToSlackUser} says ${args.join(' ')}`
+      const slackMessage = `${discordUser} says "${args.join(' ')}"`
       message.channel?.send(
-        `${MSG_PREFIX} - I'll notify your friends in slack that ${discordToSlackUser} says "${slackMessage}."`
+        `${MSG_PREFIX} - I'll notify your friends in slack that ${discordUser} says "${slackMessage}."`
       )
 
-      postToSlackWebhook({ discordUser, slackMessage }).catch(err => {
+      postToSlackWebhook({ slackMessage }).catch(err => {
         console.error('Unable to post to slack webhook.', err.message)
       })
     } else {
-      const slackMessage = `${discordToSlackUser} has come online. Join them and chat!`
+      const slackMessage = `${discordUser} has come online. Join them and chat!`
       message.channel?.send(
         `${MSG_PREFIX} - Hey ${discordUser}! I'll notify your friends in slack that you've come online.`
       )
 
-      postToSlackWebhook({ discordUser, slackMessage }).catch(err => {
+      postToSlackWebhook({ slackMessage }).catch(err => {
         console.error('Unable to post to slack webhook.', err.message)
       })
     }
