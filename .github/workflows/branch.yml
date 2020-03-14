@@ -6,6 +6,8 @@ name: PR Build & Test
 on:
   push:
     branches:
+      - '*/*'
+      - '*'
       - '!master'
 
 jobs:
