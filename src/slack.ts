@@ -8,7 +8,6 @@ export interface PublishToSlackParams {
 }
 
 const slackApi = axios.create({
-  baseURL: `${SLACK_BASE_URL}`,
   timeout: 10000,
   headers: { 'Content-Type': 'application/json' }
 })
@@ -35,5 +34,5 @@ export default async function postToSlackWebhook(params: PublishToSlackParams): 
     ]
   }
 
-  return slackApi.post(SLACK_WEBHOOK_TOKEN as string, slackPost)
+  return slackApi.post(SLACK_BASE_URL as string, slackPost)
 }
