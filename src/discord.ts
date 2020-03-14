@@ -1,5 +1,6 @@
 import { Client, PartialMessage, Message } from 'discord.js'
 
+import logger from './logger'
 import postToSlackWebhook from './slack'
 import users from './users'
 
@@ -10,7 +11,7 @@ export async function getDiscordClient(): Promise<Client> {
   const client = new Client()
 
   client.once('ready', () => {
-    console.info('Successfully started the Discord Client')
+    logger.info('Successfully started the Discord Client')
   })
 
   client.on('message', handleMessages)
@@ -18,16 +19,21 @@ export async function getDiscordClient(): Promise<Client> {
   try {
     await client.login(process.env.DISCORD_BOT_TOKEN)
   } catch (err) {
-    console.error(`Unable to log into Discord. ${err.message}`, err)
+    logger.error(`Unable to log into Discord. ${err.message}`, err)
   }
 
   return client
 }
 
 function handleMessages(message: Message | PartialMessage): void {
+  const discordAuthorUsername = message.author?.username as string
+  const discordUserName = (message.member?.nickname as string) || discordAuthorUsername
+  const discordUser: string = users[discordAuthorUsername] ?? discordUserName
+
   const msgIsGreeting = message.content?.includes('butler')
   if (msgIsGreeting) {
-    message.channel?.send(`${MSG_PREFIX} - Welcome to Virtual Hangs ${message.member?.nickname}`)
+    const preparedMessage = `${MSG_PREFIX} - Welcome to Virtual Hangs ${discordUser}`
+    message.channel?.send(preparedMessage)
   }
 
   if (!message.content?.startsWith(CMD_PREFIX) || message.author?.bot) return
@@ -35,28 +41,32 @@ function handleMessages(message: Message | PartialMessage): void {
   const command = args.shift()?.toLowerCase()
 
   if (command === Commands.Notify) {
-    const discordAuthorUsername = message.author?.username as string
-    const discordUserName = (message.member?.nickname as string) || discordAuthorUsername
-    const discordUser: string = users[discordAuthorUsername] ?? discordUserName
-
     if (args.length > 0) {
       const slackMessage = `${discordUser} says "${args.join(' ')}"`
       message.channel?.send(
         `${MSG_PREFIX} - I'll notify your friends in slack that ${discordUser} says "${slackMessage}."`
       )
 
-      postToSlackWebhook({ slackMessage }).catch(err => {
-        console.error('Unable to post to slack webhook.', err.message)
-      })
+      postToSlackWebhook({ slackMessage })
+        .then(() => {
+          logger.info(`${discordUser} sent POST to slack webhook containing message '${slackMessage}'`)
+        })
+        .catch(err => {
+          logger.error(`Unable to POST '${slackMessage}'to slack webhook for user '${discordUser}'`, err.message)
+        })
     } else {
       const slackMessage = `${discordUser} has come online. Join them and chat!`
       message.channel?.send(
         `${MSG_PREFIX} - Hey ${discordUser}! I'll notify your friends in slack that you've come online.`
       )
 
-      postToSlackWebhook({ slackMessage }).catch(err => {
-        console.error('Unable to post to slack webhook.', err.message)
-      })
+      postToSlackWebhook({ slackMessage })
+        .then(() => {
+          logger.info(`${discordUser} sent POST to slack webhook containing message '${slackMessage}'`)
+        })
+        .catch(err => {
+          logger.error(`Unable to POST '${slackMessage}' to slack webhook for user '${discordUser}'.`, err.message)
+        })
     }
   }
 }
