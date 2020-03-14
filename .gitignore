@@ -9,6 +9,9 @@ lerna-debug.log*
 # TS build dir
 dist
 
+# config & secrets
+.env
+
 # Runtime data
 pids
 *.pid
