@@ -1,10 +1,17 @@
-import { Client } from 'discord.js'
+import { Client, PartialMessage, Message } from 'discord.js'
 
 export async function getDiscordClient(): Promise<Client> {
   const client = new Client()
 
   client.once('ready', () => {
     console.log('Successfully started the Discord Client')
+  })
+
+  client.on('message', msg => {
+    const parsedMessage = parseMessage(msg)
+    if (parsedMessage.includes('butler')) {
+      msg.channel?.send(`Welcome to Virtual Hangs ${msg.member?.user}`)
+    }
   })
 
   try {
@@ -14,4 +21,12 @@ export async function getDiscordClient(): Promise<Client> {
   }
 
   return client
+}
+
+function parseMessage(message: Message | PartialMessage): string {
+  if (message.content) {
+    return message?.content.toLowerCase()
+  } else {
+    return (message as unknown) as string
+  }
 }
