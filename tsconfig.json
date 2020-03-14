@@ -8,7 +8,7 @@
     "outDir": "dist",
     "removeComments": true,
     "rootDir": "src",
-    "sourceMap": true,
+    "sourceMap": false,
     "strictNullChecks": true,
     "target": "es6",
     "typeRoots": ["node_modules/@types", "./**/typings"],

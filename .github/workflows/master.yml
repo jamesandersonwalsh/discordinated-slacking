@@ -1,12 +1,10 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: discordinated-slacking CI
+name: Build Test & Deploy
 
 on:
   push:
-    branches: [master]
-  pull_request:
     branches: [master]
 
 jobs:
@@ -31,10 +29,8 @@ jobs:
           npm test
         env:
           CI: true
-      - name: Upload production artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v1
         with:
           name: dist
           path: dist
-      - name: GitHub Action for Heroku
-        uses: actions/heroku@1.0.0
