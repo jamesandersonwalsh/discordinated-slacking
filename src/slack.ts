@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 
-const { SLACK_BASE_URL, SLACK_WEBHOOK_TOKEN } = process.env
+const { SLACK_BASE_URL } = process.env
 
 export interface PublishToSlackParams {
   discordUser: string
