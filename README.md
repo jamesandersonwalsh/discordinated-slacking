@@ -6,7 +6,7 @@
 
 An integration between discord and slack using webhooks and discord bots.
 
-## Core Dependency
+## Core Dependency 🤖
 
 This package's core dependency is [Discord.js](https://discordjs.guide/)
 
@@ -15,7 +15,7 @@ This package's core dependency is [Discord.js](https://discordjs.guide/)
 
 ## Development
 
-### Getting started
+### Getting started 🖥
 1. [Install Yarn](https://yarnpkg.com/getting-started)
 2. Install dependencies
 ```sh
@@ -41,3 +41,23 @@ npm run start:dev
 ```sh
 npm run build && npm run start
 ```
+
+## Maintaining 🛠
+
+#### Viewing Heroku Logs
+
+1. [Install the Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
+2. Run the following:
+
+```sh
+heroku login
+```
+
+```sh
+heroku logs -t --force-colors -a discordinated-slacking
+```
+
+## CI/CD 🚀
+
+1. This Project uses [GitHub Actions](https://help.github.com/en/actions) for building, testing & publishing _(in the future)_.
+1. Our contributors private instance of the bot is hosted on Heroku and gets deployed once all GitHub actions have completed.
