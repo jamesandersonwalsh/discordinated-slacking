@@ -34,6 +34,7 @@ yarn
 4. From the root directory create a new dotenv configuration _(This will contain secrets so it is not checked into Git)_.
    - From the root directory `touch .env`
    - Add your discord bot **token** and your slack **webhook url** to `.env.` _Please refer to .env.example file checked into GitHub_.
+   - Add the discord channel you'd like to sync with slack to `.env`
 
 ### To Run in Development
 
