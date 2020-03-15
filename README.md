@@ -11,24 +11,28 @@ An integration between discord and slack using webhooks and discord bots.
 This package's core dependency is [Discord.js](https://discordjs.guide/)
 
 ## Usage
+
 - No NPM package at this time, but is under heavy consideration.
 
 ## Development
 
 ### Getting started 🖥
+
 1. [Install Yarn](https://yarnpkg.com/getting-started)
 2. Install dependencies
+
 ```sh
 yarn
 ```
+
 3. Setup Bots:
    - If you are working with contributors directly then _ask us for slack/discord bot secrets_, and skip the other bullet points. _(Continue to step 4)_.
    - If you are leveraging this package to setup your own discord -> slack bot you will first need to go manually setup your server bots.
-       - One discord bot that can be used by `Discord.js`
-       - One slack bot that is configured for "Incoming Webhooks".
+     - One discord bot that can be used by `Discord.js`
+     - One slack bot that is configured for "Incoming Webhooks".
 4. From the root directory create a new dotenv configuration _(This will contain secrets so it is not checked into Git)_.
-    - From the root directory `touch .env`
-    - Add your discord bot **token** and your slack **webhook url** to `.env.` _Please refer to .env.example file checked into GitHub_.
+   - From the root directory `touch .env`
+   - Add your discord bot **token** and your slack **webhook url** to `.env.` _Please refer to .env.example file checked into GitHub_.
 
 ### To Run in Development
 
@@ -43,6 +47,11 @@ npm run build && npm run start
 ```
 
 ## Maintaining 🛠
+
+#### Useful links
+
+- [Discord.js Docs](https://discord.js.org/#/docs/main/master/general/welcome)
+- [Slack Webhook Documentation](https://api.slack.com/messaging/webhooks)
 
 #### Viewing Heroku Logs
 
