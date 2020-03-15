@@ -13,5 +13,7 @@ export default {
   jonibwhoeversheb: 'Joni',
   PonchoMcGee: 'Josh Houghton',
   notablytipsy: 'Purj',
-  lottaFLOPS: 'Connor'
+  lottaFLOPS: 'Connor',
+  Gingernaut: 'Tyler',
+  Tinkerbell: 'Carol'
 }
