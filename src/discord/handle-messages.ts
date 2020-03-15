@@ -1,31 +1,13 @@
-import { Client, PartialMessage, Message } from 'discord.js'
+import { Message, PartialMessage } from 'discord.js'
 
-import logger from './logger'
-import postToSlackWebhook from './slack'
-import users from './users'
+import logger from '../logger'
+import postToSlackWebhook from '../slack'
+import users from '../users'
 
 const CMD_PREFIX = '!'
 const MSG_PREFIX = `Beep Boop 👋🤖🤙`
 
-export async function getDiscordClient(): Promise<Client> {
-  const client = new Client()
-
-  client.once('ready', () => {
-    logger.info('Successfully started the Discord Client')
-  })
-
-  client.on('message', handleMessages)
-
-  try {
-    await client.login(process.env.DISCORD_BOT_TOKEN)
-  } catch (err) {
-    logger.error(`Unable to log into Discord. ${err.message}`, err)
-  }
-
-  return client
-}
-
-function handleMessages(message: Message | PartialMessage): void {
+export default function handleMessages(message: Message | PartialMessage): void {
   const discordAuthorUsername = message.author?.username as string
   const discordUserName = (message.member?.nickname as string) || discordAuthorUsername
   const discordUser: string = users[discordAuthorUsername] ?? discordUserName
