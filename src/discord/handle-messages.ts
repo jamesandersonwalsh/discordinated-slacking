@@ -25,9 +25,7 @@ export default function handleMessages(message: Message | PartialMessage): void 
   if (command === Commands.Notify) {
     if (args.length > 0) {
       const slackMessage = `${discordUser} says "${args.join(' ')}"`
-      message.channel?.send(
-        `${MSG_PREFIX} - I'll notify your friends in slack that ${discordUser} says "${slackMessage}."`
-      )
+      message.channel?.send(`${MSG_PREFIX} - I'll notify your friends in slack that "${slackMessage}."`)
 
       postToSlackWebhook({ slackMessage })
         .then(() => {
