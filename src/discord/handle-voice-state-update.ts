@@ -22,12 +22,14 @@ export default function handleVoiceState(oldState: VoiceState, newState: VoiceSt
   const oldChannelIsDiscordAudioChannel = oldChannel?.name === DISCORD_AUDIO_CHANNEL
   const newChannelIsDiscordAudioChannel = newChannel?.name === DISCORD_AUDIO_CHANNEL
 
+  const channelHasNotChanged = newChannelIsDiscordAudioChannel !== oldChannelIsDiscordAudioChannel
+
   if (R.and(!oldChannelIsDiscordAudioChannel, !newChannelIsDiscordAudioChannel)) {
     logger.info(`${discordUser} joined a different channel other than ${DISCORD_AUDIO_CHANNEL}`)
     return
   }
 
-  if (newChannelIsDiscordAudioChannel) {
+  if (newChannelIsDiscordAudioChannel && channelHasNotChanged) {
     const slackMessage = `Hi there 🎤! ${discordUser} has joined the audio channel #${DISCORD_AUDIO_CHANNEL}`
     postToSlackWebhook({ slackMessage })
       .then(() => {
@@ -38,7 +40,7 @@ export default function handleVoiceState(oldState: VoiceState, newState: VoiceSt
       })
   }
 
-  if (oldChannelIsDiscordAudioChannel) {
+  if (oldChannelIsDiscordAudioChannel && channelHasNotChanged) {
     const slackMessage = `Signing off 👋! ${discordUser} has left the audio channel #${DISCORD_AUDIO_CHANNEL}`
     postToSlackWebhook({ slackMessage })
       .then(() => {
