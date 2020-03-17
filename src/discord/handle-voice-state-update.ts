@@ -27,7 +27,7 @@ export default function handleVoiceState(oldState: VoiceState, newState: VoiceSt
     return
   }
 
-  if (newChannelIsDiscordAudioChannel) {
+  if (newChannelIsDiscordAudioChannel && newChannelIsDiscordAudioChannel !== oldChannelIsDiscordAudioChannel) {
     const slackMessage = `Hi there 🎤! ${discordUser} has joined the audio channel #${DISCORD_AUDIO_CHANNEL}`
     postToSlackWebhook({ slackMessage })
       .then(() => {
@@ -38,7 +38,7 @@ export default function handleVoiceState(oldState: VoiceState, newState: VoiceSt
       })
   }
 
-  if (oldChannelIsDiscordAudioChannel) {
+  if (oldChannelIsDiscordAudioChannel && newChannelIsDiscordAudioChannel !== oldChannelIsDiscordAudioChannel) {
     const slackMessage = `Signing off 👋! ${discordUser} has left the audio channel #${DISCORD_AUDIO_CHANNEL}`
     postToSlackWebhook({ slackMessage })
       .then(() => {
