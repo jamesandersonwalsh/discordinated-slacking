@@ -30,7 +30,8 @@ export default function handleVoiceState(oldState: VoiceState, newState: VoiceSt
   }
 
   if (newChannelIsDiscordAudioChannel && channelHasNotChanged) {
-    const slackMessage = `Hi there 🎤! ${discordUser} has joined the audio channel #${DISCORD_AUDIO_CHANNEL}`
+    const greetingMessage = GREETING_MESSAGES[Math.floor(Math.random() * GREETING_MESSAGES.length)]
+    const slackMessage = `${greetingMessage}\n${discordUser} has joined the audio channel #${DISCORD_AUDIO_CHANNEL}`
     postToSlackWebhook({ slackMessage })
       .then(() => {
         logger.info(`${discordUser} has joined ${DISCORD_AUDIO_CHANNEL}`)
@@ -41,7 +42,8 @@ export default function handleVoiceState(oldState: VoiceState, newState: VoiceSt
   }
 
   if (oldChannelIsDiscordAudioChannel && channelHasNotChanged) {
-    const slackMessage = `Signing off 👋! ${discordUser} has left the audio channel #${DISCORD_AUDIO_CHANNEL}`
+    const goodbyMessage = GOODBYE_MESSAGES[Math.floor(Math.random() * GOODBYE_MESSAGES.length)]
+    const slackMessage = `${goodbyMessage} ${discordUser} has left the audio channel #${DISCORD_AUDIO_CHANNEL}`
     postToSlackWebhook({ slackMessage })
       .then(() => {
         logger.info(`${discordUser} has left ${DISCORD_AUDIO_CHANNEL}`)
@@ -51,3 +53,19 @@ export default function handleVoiceState(oldState: VoiceState, newState: VoiceSt
       })
   }
 }
+
+const GREETING_MESSAGES = [
+  'Hi there 🎤!',
+  'Come here often 😏?',
+  `Uh oh... here come's trouble...`,
+  'Now remotely installing virus.exe...',
+  'So I guess theyll just let anyone in here then huh?',
+  'Come on in the water is great!'
+]
+
+const GOODBYE_MESSAGES = [
+  'Signing off 👋!',
+  'In a while 🐊...',
+  `See ya, wouldn't wanna be ya`,
+  'Time for me to make like a tree and scram.'
+]
