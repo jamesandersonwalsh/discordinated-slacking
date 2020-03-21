@@ -15,5 +15,6 @@ export default {
   notablytipsy: 'Purj',
   lottaFLOPS: 'Connor',
   Gingernaut: 'Tyler',
-  Tinkerbell: 'Carol'
+  Tinkerbell: 'Carol',
+  bkuddy: 'Brett'
 }
