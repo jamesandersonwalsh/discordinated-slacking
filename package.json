@@ -85,7 +85,7 @@
     "minimist": "^1.2.2"
   },
   "engines": {
-    "node": "12.13.x"
+    "node": "12.x"
   },
   "cacheDirectories": [
     "node_modules"
