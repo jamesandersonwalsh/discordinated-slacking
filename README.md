@@ -5,7 +5,7 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=102)](https://opensource.org/licenses/GPL-3.0/)
 
-An integration between discord and slack using webhooks and discord bots.
+An 2020 COVID project that uses webhooks to communicate between discord and slack using bots.
 
 ## Core Dependency 🤖
 
